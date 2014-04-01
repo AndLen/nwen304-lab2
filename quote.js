@@ -1,5 +1,8 @@
 var express = require('express');
+var logfmt = require("logfmt");
 var app = express();
+
+
 
 var quotes = [
   { author : 'Audrey Hepburn', text : "Nothing is impossible, the word itself says 'I'm possible'!"},
@@ -7,7 +10,16 @@ var quotes = [
   { author : 'Unknown', text : "Even the greatest was once a beginner. Don’t be afraid to take that first step."},
   { author : 'Neale Donald Walsch', text : "You are afraid to die, and you’re afraid to live. What a way to exist."}
 ];
+app.use(logfmt.requestLogger());
 
+app.get('/', function(req, res) {
+  res.send(index.html);
+});
+
+var port = Number(process.env.PORT || 5000);
+app.listen(port, function() {
+  console.log("Listening on " + port);
+});
 // make express handle JSON and other requests
 app.use(express.bodyParser());
 // serve up files from this directory 
